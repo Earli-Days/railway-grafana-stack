@@ -11,9 +11,10 @@ scrape_configs:
    scheme: http
    static_configs:
      # Temporal Service metrics target
-     - targets: ['${TEMPORAL_SCRAPE_PRIVATE_DOMAIN}:${TEMPORAL_SCRAPE_PORT}']
+     - targets: ['railway.temporal.internal:8000']
        labels:
          group: 'server-metrics'
+
 
      # # Local app targets (if configured)
      # - targets:
