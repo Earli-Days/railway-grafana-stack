@@ -11,8 +11,7 @@ scrape_configs:
    scheme: http
    static_configs:
      # Temporal Service metrics target
-     - targets:
-         - targets: ['${TEMPORAL_SCRAPE_PRIVATE_DOMAIN}:${TEMPORAL_SCRAPE_PORT}']
+     - targets: ['${TEMPORAL_SCRAPE_PRIVATE_DOMAIN}:${TEMPORAL_SCRAPE_PORT}']
        labels:
          group: 'server-metrics'
 
