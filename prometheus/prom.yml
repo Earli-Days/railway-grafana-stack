@@ -5,15 +5,27 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+ 
+  - job_name: 'temporal' # A descriptive name for your Temporal scrape job
+    scheme: http # Temporal metrics are usually exposed over HTTP
+    static_configs:
+      # Use the provided Railway private domain and TCP application port
+      - targets: ['${{Temporal.RAILWAY_PRIVATE_DOMAIN}}:${{Temporal.RAILWAY_TCP_APPLICATION_PORT}}']
 
- - job_name: 'temporalmetrics'
-   metrics_path: /metrics
-   scheme: http
-   static_configs:
-     # Temporal Service metrics target
-     - targets: ['railway.temporal.internal:8000']
-       labels:
-         group: 'server-metrics'
+
+  # - job_name: 'example_api'
+  #   scheme: http
+  #   static_configs:
+  #     - targets: ['example_api:9091']
+
+  #  ? TODO: add your services here
+  # - job_name: 'your-job-name'
+  #   scheme: https
+  #   static_configs:
+  #     - targets: ['URL_GOES_HERE']
+  #   basic_auth:
+  #     username: HTTP_AUTH_USERNAME_GOES_HERE
+  #     password: HTTP_AUTH_PASSWORD_GOES_HERE
 
 
      # # Local app targets (if configured)
