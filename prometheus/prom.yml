@@ -10,7 +10,7 @@ scrape_configs:
     scheme: http # Temporal metrics are usually exposed over HTTP
     static_configs:
       # Use the provided Railway private domain and TCP application port
-      - targets: ['temporal.railway.internal:8000', 'worker.railway.internal:8078']
+      - targets: ['temporal.railway.internal:8000', 't-worker-production.up.railway.app:8078']
 
 
   # - job_name: 'example_api'
