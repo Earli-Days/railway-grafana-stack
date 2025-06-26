@@ -6,12 +6,22 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'temporal' # A descriptive name for your Temporal scrape job
-    scheme: http # Temporal metrics are usually exposed over HTTP
-    static_configs:
-      # Use environment variables for the target
-      # These will be substituted by Railway's build/run environment
-      - targets: ['${TEMPORAL_SCRAPE_PRIVATE_DOMAIN}:${TEMPORAL_SCRAPE_PORT}']
+ - job_name: 'temporalmetrics'
+   metrics_path: /metrics
+   scheme: http
+   static_configs:
+     # Temporal Service metrics target
+     - targets:
+         - targets: ['${TEMPORAL_SCRAPE_PRIVATE_DOMAIN}:${TEMPORAL_SCRAPE_PORT}']
+       labels:
+         group: 'server-metrics'
+
+     # # Local app targets (if configured)
+     # - targets:
+     #     - 'host.docker.internal:8077'
+     #     - 'host.docker.internal:8078'
+     #   labels:
+     #     group: 'sdk-metrics'
 
 
   # - job_name: 'example_api'
