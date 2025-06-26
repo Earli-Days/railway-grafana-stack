@@ -9,8 +9,9 @@ scrape_configs:
   - job_name: 'temporal' # A descriptive name for your Temporal scrape job
     scheme: http # Temporal metrics are usually exposed over HTTP
     static_configs:
-      # Use the provided Railway private domain and TCP application port
-      - targets: ['${{Temporal.RAILWAY_PRIVATE_DOMAIN}}:${{Temporal.RAILWAY_TCP_APPLICATION_PORT}}']
+      # Use environment variables for the target
+      # These will be substituted by Railway's build/run environment
+      - targets: ['${TEMPORAL_SCRAPE_PRIVATE_DOMAIN}:${TEMPORAL_SCRAPE_PORT}']
 
 
   # - job_name: 'example_api'
