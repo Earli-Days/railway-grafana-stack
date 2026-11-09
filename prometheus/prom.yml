@@ -10,7 +10,25 @@ scrape_configs:
     scheme: http # Temporal metrics are usually exposed over HTTP
     static_configs:
       # Use the provided Railway private domain and TCP application port
-      - targets: ['temporal.railway.internal:8000', 't-worker-production.up.railway.app']
+      - targets: ['temporal.railway.internal:8000']
+        labels:
+          component: 'server'
+      # Worker SDK metrics (METRICS_PORT, default 8078) over private networking, one target per worker service
+      - targets: ['worker.railway.internal:8078']
+        labels:
+          component: 'worker'
+          worker: 't-worker'
+      - targets: ['t-worker-copy.railway.internal:8078']
+        labels:
+          component: 'worker'
+          worker: 't-worker-1'
+
+  - job_name: 'postgres' # postgres-exporter for Temporal DB New (read-only 'monitoring' role)
+    scheme: http
+    static_configs:
+      - targets: ['postgres-exporter.railway.internal:9187']
+        labels:
+          database_service: 'temporal-db-new'
 
 
   # - job_name: 'example_api'
